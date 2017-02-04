@@ -1,5 +1,6 @@
 /**
  * Created by bikram on 2/4/17.
+ * these are all coderbyte problems
  */
 
 let fizzbuzz = (n) => {
