@@ -3,38 +3,66 @@
  * these are all coderbyte problems
  */
 
+/**
+ * Print out all the numbers from 1 to 100. But for every number divisible by
+ * 3 print replace it with the word “Fizz,” for any number divisible by 5
+ * replace it with the word “Buzz” and for a number divisible
+ * by both 3 and 5 replace it with the word “FizzBuzz.”
+ * @param n
+ * @returns {Array}
+ */
 let fizzbuzz = (n) => {
     let result = [];
     for (let i = 1; i <= n; i++) {
         let add = '';
-        if (i % 3 === 0) { add += 'Fizz'; }
-        if (i % 5 === 0) { add += 'Buzz'; }
-        if (add === '') { result.push(i); }
-        else { result.push(add); }
+        if (i % 3 === 0) {
+            add += 'Fizz';
+        }
+        if (i % 5 === 0) {
+            add += 'Buzz';
+        }
+        if (add === '') {
+            result.push(i);
+        } else {
+            result.push(add);
+        }
     }
     return result;
 };
-console.log('fizzbuzz',fizzbuzz(3)[2] === 'Fizz');
-console.log('fizzbuzz',fizzbuzz(5)[4] === 'Buzz');
-console.log('fizzbuzz',fizzbuzz(15)[14] === 'FizzBuzz');
+console.log('fizzbuzz', fizzbuzz(3)[2] === 'Fizz');
+console.log('fizzbuzz', fizzbuzz(5)[4] === 'Buzz');
+console.log('fizzbuzz', fizzbuzz(15)[14] === 'FizzBuzz');
 
+/**
+ * You are given an array and some number S. Determine if any two numbers
+ * within the array sum to S.
+ * @param arr
+ * @param S
+ * @returns {boolean}
+ */
 let twoSum = (arr, S) => {
     let hashTable = {};
     for (let i = 0; i < arr.length; i++) {
         let sumMinusElement = S - arr[i];
-        if (typeof  hashTable[sumMinusElement] !== 'undefined') {
+        if (typeof hashTable[sumMinusElement] !== 'undefined') {
             return true;
         }
         hashTable[arr[i]] = true;
     }
     return false;
 };
-console.log('twoSum',twoSum([1,2,3],5) === true);
-console.log('twoSum',twoSum([1,2,3],6) === false);
+console.log('twoSum', twoSum([1, 2, 3], 5) === true);
+console.log('twoSum', twoSum([1, 2, 3], 6) === false);
 
+/**
+ * sum up all of the numbers within an array, but the array may also contains
+ * other arrays with numbers.
+ * @param arr
+ * @returns {number}
+ */
 // let does not work for recursion calls, using block scope
 // let sumOfNestedArray = (arr) => {
-var sumOfNestedArray = function (arr) {
+var sumOfNestedArray = function(arr) {
     let result = 0;
     for (let i = 0; i < arr.length; i++) {
         if (typeof arr[i] !== 'number') {
@@ -45,21 +73,29 @@ var sumOfNestedArray = function (arr) {
     }
     return result;
 };
-console.log('sumOfNestedArray',sumOfNestedArray([1,2,[1,2,3]]) === 9);
-console.log('sumOfNestedArray',sumOfNestedArray([1,2,3]) === 6);
+console.log('sumOfNestedArray', sumOfNestedArray([1, 2, [1, 2, 3]]) === 9);
+console.log('sumOfNestedArray', sumOfNestedArray([1, 2, 3]) === 6);
 
+/**
+ * determine the angle between the to hands on a clock.
+ * @param hour
+ * @param min
+ * @returns {number}
+ */
 let clockAngle = (hour, min) => {
     var h = 0.5 * (60 * hour + min);
     var m = 6 * min;
     var angle = Math.abs(h - m);
     return (angle > 180) ? 360 - angle : angle;
 };
-console.log('clockAngle',clockAngle(3,0) === 90);
+console.log('clockAngle', clockAngle(3, 0) === 90);
 
 /**
- is the given number a prime
+ * is the given number a prime
+ * @param n
+ * @returns {boolean}
  */
-function isprime(n) {
+let isprime = (n) => {
     if (n < 2) {
         return false;
     }
@@ -72,12 +108,15 @@ function isprime(n) {
         }
     }
     return true;
-}
+};
 
 /**
- implement map
+ * implement map
+ * @param arr
+ * @param fn
+ * @returns {Array}
  */
-function map(arr, fn) {
+let map = (arr, fn) => {
     let result = [];
     // apply the function to each element and store the result
     for (let i of arr) {
@@ -85,7 +124,7 @@ function map(arr, fn) {
         result.push(applied);
     }
     return result;
-}
+};
 
 // usage
 let square = (x) => x * x;
@@ -94,9 +133,12 @@ map([1, 2, 3, 4], square); // => [1, 4, 9, 16]
 map([1, 2, 3, 4], addZeros); // => [100, 200, 300, 400]
 
 /**
- implement filter
+ * implement filter
+ * @param arr
+ * @param fn
+ * @returns {Array}
  */
-function filter(arr, fn) {
+let filter = (arr, fn) => {
     let result = [];
     // pass the element to the function and check
     // if the result comes back true
@@ -107,42 +149,48 @@ function filter(arr, fn) {
         }
     }
     return result;
-}
+};
 // usage
 let isPositive = (x) => x > 0;
 filter([-2, 4, 5, 8, -44, -6], isPositive); // => [4, 5, 8]
 
 /**
- You are given an array of characters and a string S.
- Write a function to return the string S with all the characters
- from the array removed
+ * You are given an array of characters and a string S.
+ * Write a function to return the string S with all the characters
+ * from the array removed.
+ * @param arr
+ * @param string
+ * @returns {string}
  */
-function removeChars(arr, string) {
+let removeChars = (arr, string) => {
     // store characters of arr in a hash table
     var hashTable = {};
     for (let c of arr) {
         hashTable[c] = true;
     }
     // loop through the string and check if the character exists in
-    // the hash table, if so, do not add it to the result string let result = '';
+    // the hash table, if so, do not add it to the result string
+    let result = '';
     for (let c of string) {
         if (hashTable[c] === undefined) {
             result += c;
         }
     }
     return result;
-}
+};
 // usage
 removeChars(['h', 'e', 'w', 'o'], "hello world"); // => "ll rld"
 
 /**
- You are given a string with the symbols ( and ) and you need to write a
- function that will determine if the parenthsis are correctly nested in the
- string which means every opening ( has a closing )
+ * You are given a string with the symbols ( and ) and you need to write a
+ * function that will determine if the parenthsis are correctly nested in the
+ * string which means every opening ( has a closing )
+ * @param stringWithParens
+ * @returns {boolean}
  */
-function matchingParens(string) {
+let matchingParens = (stringWithParens) => {
     let counter = 0;
-    for (let c of string) {
+    for (let c of stringWithParens) {
         if (c === '(') {
             counter += 1;
         }
@@ -151,13 +199,15 @@ function matchingParens(string) {
         }
     }
     return (counter === 0);
-}
+};
 
 /**
- you are given a string and you should return the first character
- that is unique in the entire string
+ * you are given a string and you should return the first character
+ * that is unique in the entire string
+ * @param string
+ * @returns {*}
  */
-function firstNonrepChar(string) {
+let firstNonrepChar = (string) => {
     let hashTable = {};
     // store each character in the hash table with
     // the frequency of times it occurs
@@ -177,4 +227,4 @@ function firstNonrepChar(string) {
     }
     // return -1 if no unique character exists
     return -1;
-}
+};
