@@ -1,3 +1,3 @@
 #### js_problems
 
-Placeholder project for some interesting js problems received from time to time.
+Placeholder project for some interesting front-end problems seen from time to time.
