@@ -1,6 +1,6 @@
-
-
-// ES6/ES7 syntax
+/**
+ * ES6/ES7 syntax
+ */
 // temporal dead zone
 (function do_something() {
   let x = 'outer value';
@@ -13,7 +13,9 @@
   }());
 })();
 
-// general snippets
+/**
+ * general snippets
+ */
 let getLocalStorageContents = ()  => {
   let localStorageKey;
   for (let i = 0; i < localStorage.length; i++){
@@ -25,7 +27,10 @@ let getLocalStorageContents = ()  => {
   }
 }
 getLocalStorageContents();
-// general array questions
+
+/**
+ * general array questions
+ */
 var arryWithNumericSrings = ['111','11','12'];
 var sortedArray = arryWithNumericSrings.sort();
 console.log('isSortArrayInPlaceOperation',sortedArray);
@@ -102,7 +107,10 @@ var result = mapped.map(function(el){
   return list[el.index];
 });
 console.log('efficentSort',result);
-// general object property enumeration
+
+/**
+ * general object property enumeration
+ */
 var obj1 = {};
 obj1.prop1 = 1;
 obj1.method1 = function(){};
@@ -136,7 +144,9 @@ console.log('objAfterPrototype object.keys',Object.keys(obj1));
 // Object.create() syntax or Object.defineProperty() syntax, which is not the case here
 console.log('objAfterPrototype object.getOwnPropertyNames',Object.getOwnPropertyNames(obj1));
 
-// exception throw try catch nechanism 
+/**
+ * exception throw try catch nechanism 
+ */
 // the corresponding let version (arrow function) doesn't seem to work
 var UserException = function (message) {
    this.message = message;
@@ -151,7 +161,9 @@ try {
    console.error(e.message, e.name); 
 }
 
-// telenav interview
+/**
+ * telenav interview
+ */
 // module loading pattern
 // oauth2
 // pix/em/rem
@@ -178,7 +190,9 @@ let shiftZeroes = (arr) => {
 }
 console.log(shiftZeroes(myArray));
 
-// ten-x interview
+/**
+ * ten-x interview
+ */
 // primitives are passed by value , objects are by reference
 var x = 1;
 var incrementX = function(x) {
@@ -187,7 +201,9 @@ var incrementX = function(x) {
 console.log(incrementX(x));
 console.log(x);
 
-// prudential interview
+/**
+ * prudential interview
+ */
 // bold any given word without using css
 // does pseudo class work with all elements
 // new tags in html5 (section/header/footer/nav/ haven't used - canvas)
@@ -197,6 +213,8 @@ console.log(x);
 
 /**
  * coderbyte
+ */
+/** 
  * Have the function LetterChanges(str) take the str parameter being passed and modify
  * it using the following algorithm. Replace every letter in the string with the letter
  * following it in the alphabet (ie. c becomes d, z becomes a). 
@@ -229,7 +247,9 @@ function LetterChanges(str) {
 }
 console.log(LetterChanges("Argument goes here  hello World"));
 
-// ayla networks interview
+/**
+ * ayla networks interview
+ */
 // given an m by n grid, find if a given word exists
 // a word is found by traversing sideways and up/down but not diagonally
 // recursive string reverse
@@ -306,7 +326,9 @@ var personObject= new Person('test',['hello','world']);
 personObject.saluteFriends();
 personObject.sayHelloLater(1000,'testnew delayed ');
 
-// walmart interview
+/**
+ * walmart interview
+ */
 var a = 1;
 function b() {
   console.log('inside walmart first question',a);
@@ -359,7 +381,6 @@ function g() {
 g();
 console.log('walmart 3rd question',h);
 
-//###
 var num = 10,
     name = "Walmart",
     obj1 = {
@@ -439,7 +460,10 @@ var flatten = function(arr,resultArr) {
     return resultArr.join();
 }
 console.log('flatten',flatten(input)); //1,3,5,4,7,2,2,3,4
-// walmart onsite interview
+
+/**
+ * walmart onsite interview
+ */ 
 // css child/descendent/sibling/general
 // local storage vs session storage - what about different browsers/different tabs
 // in chrome , duplicating a tab copies the session storage- going forward there is
@@ -527,7 +551,9 @@ var delayedObjectMethod = function () {
 }
 delayedObjectMethod.call(obj);
 
-// narvar interview
+/**
+ * narvar interview
+ */ 
 // ispalindrome then string prototype then check if function exists
 // is the following isplanidrome better or the more usual for-loop
 // implemenentation better
@@ -538,7 +564,9 @@ console.log('isPalindrome',isPalindrome('abba'));
 console.log('isPalindrome',isPalindrome('abcd'));
 // css - modal window z-index and x close button on top right
 
-// vmware interview
+/**
+ * vmware interview
+ */ 
 var x=1;
 (function() {
   console.log(x);
@@ -592,7 +620,9 @@ console.log('isTagsBalanced',isTagsBalanced('[]'));
 console.log('isTagsBalanced',isTagsBalanced('[]{}([({})])'));
 console.log('isTagsBalanced',isTagsBalanced('([({[})])'));
 
-// viome interview
+/**
+ * viome interview
+ */ 
 // name some common request headers
 // find if two strings are palindromes of each other
 // - use two objects/ alternatively use one object and 
@@ -601,7 +631,9 @@ console.log('isTagsBalanced',isTagsBalanced('([({[})])'));
 // given an array , return another array with it 
 // appended [1,2] ==> [1,2,1,2]
 
-// cloudcar interview
+/**
+ * cloudcar interview
+ */ 
 console.log(typeof 32)
 console.log(typeof '')
 console.log(typeof [])
@@ -622,7 +654,9 @@ function letTest() {
 }
 // give example of a slow inbuilt angular directive - wtf
 
-// baidu sde interview
+/**
+ * baidu sde interview
+ */ 
 // Give a list of meeting times, find minimum of rooms it need to take
 // 1000-1100 => 1 room
 // 1000-1100, 1000-1200 => 2 rooms
@@ -635,9 +669,8 @@ function letTest() {
 var getNumberOfRooms = function(arr) {
   var numberOfRooms=1;
   // arr = arr.map(function(currentVal,index) {
-  //     if ( currentVal[1] <  currentVal[0] ) {
-  //          currentVal[1] +=2400;
-  //     }
+  //     if ( currentVal[1] <  currentVal[0] )  //          currentVal[1] +=2400;
+  //     
   // })
   for (var i=0; i< arr.length; i++) {
     if ( (arr[i][1] < arr[i][0])) {
@@ -657,7 +690,9 @@ var getNumberOfRooms = function(arr) {
 }
 console.log('getNumberOfRooms',getNumberOfRooms([[2200,400],[2100,2300]]));
 
-// baidu in person interview
+/**
+ * baidu in person interview
+ */ 
 // given a small string and a large corpus of text, find the smallest pangram
 // code up an end-to-end folder structure , including server side representation
 // write down the object modeliing for trafic light / human traffic light/ traffic cluster/ city lights controller/
