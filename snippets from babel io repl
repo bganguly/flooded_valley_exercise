@@ -1,0 +1,663 @@
+
+
+// ES6/ES7 syntax
+// temporal dead zone
+(function do_something() {
+  let x = 'outer value';
+  (function() {
+    // start TDZ for x
+    //console.log(x); // hard error, x is not defined
+    // the next x is being hoisted up
+    // otherwise we would have seen the previous x
+    let x = 'inner value'; // declaration ends TDZ for x
+  }());
+})();
+
+// general snippets
+let getLocalStorageContents = ()  => {
+  let localStorageKey;
+  for (let i = 0; i < localStorage.length; i++){
+    localStorageKey = localStorage.key(i);
+    console.log('printing local storage key values for storage index: ', i);
+    console.log('localStorageKey',localStorageKey);
+    // output below may be too large
+    //console.log('localStorageValue',JSON.parse(localStorage.getItem(localStorageKey)));
+  }
+}
+getLocalStorageContents();
+// general array questions
+var arryWithNumericSrings = ['111','11','12'];
+var sortedArray = arryWithNumericSrings.sort();
+console.log('isSortArrayInPlaceOperation',sortedArray);
+console.log('isSortArrayInPlaceOperation',sortedArray === arryWithNumericSrings);
+console.log('sortArryWithNumericSrings using comparator',
+  arryWithNumericSrings.sort((a,b) => {
+    return parseInt(a)-parseInt(b);
+  })
+);
+// below is 1,1000,1001,857 - provide a non-default comparator
+console.log('sort array with numeric values',[1000, 1001, 857, 1].sort());
+console.log('sort array with mixed values',[1000, 'f',1001, 'a',857, 1,'c']
+.sort(function(a,b){
+  var result;
+  if ( ! isNaN(a) && ! isNaN(b)) {
+    result = parseInt(a) - parseInt(b);
+  } else if ( isNaN(a) && isNaN(b)) {
+    result = (a > b);
+  } else {
+    if (! isNaN(a) && isNaN(b) ) {
+      result = -1;
+    } else {
+      result = 1
+    }
+  }
+  return result;
+}));
+
+var kvArray = [{key: 1, value: 10}, 
+               {key: 2, value: 20}, 
+               {key: 3, value: 30}];
+var reformattedArray = kvArray.map(function(obj) { 
+  var rObj = {};
+  rObj[obj.key] = obj.value;
+  return rObj;
+});
+console.log('reformattedArray',reformattedArray);
+// 2200-400, 100-300 => 2 rooms
+var kvArray = [[2200,400],[100,300]];
+var reformattedArray = kvArray.map(function(currentVal) { 
+  var rArr = [];
+  rArr[0] = currentVal[0];
+  if ( currentVal[1] <  currentVal[0] ) {
+    currentVal[1] +=2400;
+  }
+  rArr[1] = currentVal[1];
+  return rArr;
+});
+console.log('reformattedArray',reformattedArray);
+var kvArray = [{'2200':'400'},{'100':'300'}];
+var reformattedArray = kvArray.sort(function(a,b) { 
+  var aBeginTime;
+  var bBeginTine;
+  for ( var key in a) {
+    aBeginTime = key;
+  };
+  for ( var key in b) {
+    bBeginTine = key;
+  };
+  return parseInt(aBeginTime) - parseInt(bBeginTine);
+});
+console.log('reformattedArray',reformattedArray);
+var list = ['Delta', 'alpha', 'CHARLIE', 'bravo'];
+// temporary array holds objects with position and sort-value
+var mapped = list.map(function(el, i) {
+  return { index: i, value: el.toLowerCase() };
+})
+// sorting the mapped array containing the reduced values
+mapped.sort(function(a, b) {
+  return +(a.value > b.value) || +(a.value === b.value) - 1;
+});
+// container for the resulting order
+var result = mapped.map(function(el){
+  return list[el.index];
+});
+console.log('efficentSort',result);
+// general object property enumeration
+var obj1 = {};
+obj1.prop1 = 1;
+obj1.method1 = function(){};
+console.log('propertyIsEnumerable',obj1.propertyIsEnumerable('prop1'));
+console.log('propertyIsEnumerable',obj1.propertyIsEnumerable('method1'));
+console.log('object.keys',Object.keys(obj1));
+var obj1Constructor = function() {};
+var obj1 = new obj1Constructor;
+obj1.prop1 = 1;
+obj1.method1 = function(){};
+console.log('objFromConstructor propertyIsEnumerable',obj1.propertyIsEnumerable('prop1'));
+console.log('objFromConstructor propertyIsEnumerable',obj1.propertyIsEnumerable('method1'));
+console.log('objFromConstructor object.keys',Object.keys(obj1));
+var obj1Constructor = function() {
+  this.x=1;
+  this.z=-1;
+};
+var ob21Constructor = function() {
+};
+obj1Constructor.prototype = new obj1Constructor;
+obj1Constructor.prototype.method2 = new function(){this.y=2;};
+var obj2 = new ob21Constructor;
+obj2.prop1 = 1;
+obj2.method1 = function(){};
+console.log('objAfterPrototype propertyIsEnumerable',obj1.propertyIsEnumerable('prop1'));
+console.log('objAfterPrototype propertyIsEnumerable',obj1.propertyIsEnumerable('method1'));
+console.log('objAfterPrototype propertyIsEnumerable',obj1.propertyIsEnumerable('method2'));
+console.log('objAfterPrototype propertyIsEnumerable',obj1.propertyIsEnumerable('z'));
+console.log('objAfterPrototype object.keys',Object.keys(obj1));
+// getOwnPropertyNames also returns non-enumerable property but that requires 
+// Object.create() syntax or Object.defineProperty() syntax, which is not the case here
+console.log('objAfterPrototype object.getOwnPropertyNames',Object.getOwnPropertyNames(obj1));
+
+// exception throw try catch nechanism 
+// the corresponding let version (arrow function) doesn't seem to work
+var UserException = function (message) {
+   this.message = message;
+   this.name = 'UserException';
+}
+try {
+   // statements to try
+   // throw expression for edge cases
+   // - expression can also be primitives and in that case no need to new up
+  throw new UserException('InvalidMonthNo');
+} catch (e) {
+   console.error(e.message, e.name); 
+}
+
+// telenav interview
+// module loading pattern
+// oauth2
+// pix/em/rem
+// responsive vs fluid
+// flexbox properties
+// inline box vs block
+var myFish = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon'];
+var shiftArray = function(arr, steps) {
+  return myFish.splice(arr.length-steps, steps).concat(myFish);
+}
+console.log(shiftArray(myFish,3));
+
+var myArray = [1,0,2,3,0,0,4,5,6,0,0,0];
+let shiftZeroes = (arr) => {
+  const zero = 0;
+  let zeroArr=[];
+  for (let i=0; i<arr.length;i++ ) {
+    if (arr[i] === 0) {
+      zeroArr.push(arr.splice(i,1)[0]);
+      --i;
+    }
+  }
+  return arr.concat(zeroArr);
+}
+console.log(shiftZeroes(myArray));
+
+// ten-x interview
+// primitives are passed by value , objects are by reference
+var x = 1;
+var incrementX = function(x) {
+  return ++x;
+}
+console.log(incrementX(x));
+console.log(x);
+
+// prudential interview
+// bold any given word without using css
+// does pseudo class work with all elements
+// new tags in html5 (section/header/footer/nav/ haven't used - canvas)
+// new html5 line break oppurtunity- wbr
+// local vs session storage
+// given a list of li's write code that alerts the index of each, when clicked
+
+/**
+ * coderbyte
+ * Have the function LetterChanges(str) take the str parameter being passed and modify
+ * it using the following algorithm. Replace every letter in the string with the letter
+ * following it in the alphabet (ie. c becomes d, z becomes a). 
+ * Then capitalize every vowel in this new string (a,e,i,o,u) 
+ * and finally return this modified string. 
+ */
+function LetterChanges(str) { 
+  var alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  var strAsArray = str.split('');
+  var currentChar;
+  var resultStr = '';
+  var posInAlphabet;
+  var nextInAlphabet;
+  var vowelRegex = /[aeiou]/;
+  for( var i=0;i < strAsArray.length ;i++) {
+    currentChar = strAsArray[i];
+    posInAlphabet = alphabet.indexOf(currentChar.toLowerCase());
+    if ( posInAlphabet > -1) {
+          nextInAlphabet = alphabet.charAt(posInAlphabet+1);
+        if (nextInAlphabet.search(vowelRegex) > -1) {
+          resultStr += nextInAlphabet.toUpperCase() ;
+        } else {
+          resultStr += nextInAlphabet ;
+        }
+    } else {
+        resultStr += currentChar;
+    }
+  }
+  return resultStr; 
+}
+console.log(LetterChanges("Argument goes here  hello World"));
+
+// ayla networks interview
+// given an m by n grid, find if a given word exists
+// a word is found by traversing sideways and up/down but not diagonally
+// recursive string reverse
+// inter controller communication
+// why 'use strict'
+// why shoudn't we 'eval' arbitrary response string- alternatives
+var reverseStr = function( inputStr) {
+  var result ='';
+  if (inputStr !== '') {
+    result += reverseStr(inputStr.substr(1)) + inputStr.charAt(0);
+  }
+  return result;
+}
+console.log('reverseStr',reverseStr('hello'));
+
+var Person = function (name, friends) { // friends is a list of strings
+  this.say = function(sentence) {
+    console.log(name + ' says: ' + sentence);
+  };
+
+  this.sayHello = function(otherName) {
+    this.say('hello ' + otherName + '!');
+  };
+
+  /* why doesn't the following work ?
+  this.saluteFriends = function() {
+    friends.forEach(function(friend) {
+      this.sayHello(friend);
+    });
+  };
+  */
+  this.saluteFriends = function() {
+    friends.forEach(function(friend) {
+      this.sayHello(friend);
+    },this);
+  };
+  
+  this.saluteFriends = function() {
+    friends.forEach(this.sayHello.bind(this));
+  };
+  
+  this.saluteFriends = () => {
+    friends.forEach((friend) => {
+      this.sayHello(friend);
+    });
+  };
+  
+/* why doesn't the following work ?
+  this.sayHelloLater = function(delay, otherName) {
+    setTimeout(function() {
+      this.sayHello(otherName);
+    }, delay);
+  };
+*/
+  this.sayHelloLater = function(delay, otherName) {
+    var self = this;
+    setTimeout(function() {
+      self.sayHello(otherName);
+    }, delay);
+  };
+  
+  this.sayHelloLater = function(delay, otherName) {
+    setTimeout(this.sayHello.bind(this, otherName), delay);
+  };
+  
+  this.sayHelloLater = (delay, otherName) => {
+    setTimeout( () => {
+      this.sayHello(otherName);
+      }, delay
+    );
+  };
+}
+var personObject= new Person('test',['hello','world']);
+personObject.saluteFriends();
+personObject.sayHelloLater(1000,'testnew delayed ');
+
+// walmart interview
+var a = 1;
+function b() {
+  console.log('inside walmart first question',a);
+	a = 10;
+  console.log('inside walmart first question',a);
+	return;
+	function a() {}
+}
+b();
+console.log('walmart ist question',a);
+function c() {
+    // hard error d is not defined -
+    // d is neither a var declaration nor an assignment
+    //d; 
+}
+c();
+// hard error d is not defined
+//console.log('walmart 2nd question',d);
+function c() {
+    // d now becomes a global property assignment
+    d =10; 
+}
+c();
+// d is available globally
+console.log('walmart 2nd question',d);
+function e() {
+    // function f is a declaration and not a function expression
+    // it doesn't get attached to global scope
+    function f() {
+    }
+}
+e();
+// f is not available globally 
+// console.log('walmart 2nd question',f);
+function e1() {
+    // function declaration f gets hoisted and then gets the value 10.
+    // however since its not originally a primitive
+    // it doesn't get attached to global scope
+    f = 10;
+    function f() {
+    }
+}
+e1();
+// console.log('walmart 2nd question',f);
+function g() {
+    h = 10;
+    h = function () {
+    }
+}
+g();
+console.log('walmart 3rd question',h);
+
+//###
+var num = 10,
+    name = "Walmart",
+    obj1 = {
+        value: "first value"
+    },
+    obj2 = {
+        value: "second value"
+    },
+    obj3  = obj2;
+    // ,obj3 = {};
+
+function change(num, name, obj1, obj2) {
+    num = num * 10;
+    console.log('inside walmart 3rd question - num',num);
+    name = "Walmart labs";
+    obj1 = obj2;
+    console.log('inside walmart 3rd question - obj1',obj1.value);
+    obj2.value = "new value";
+    console.log('inside walmart 3rd question - obj1, obj2, obj3  ',
+    obj1.value, obj2.value, obj3.value);
+    // obj3.value = "obj3 value";
+    // console.log('inside walmart 3rd question - obj1, obj2, obj3  ',obj1, obj2, obj3);
+}
+change(num, name, obj1, obj2);
+console.log(num);// 10 
+// copy of value is 100, but it shadows the gobal property
+// only as long as the function is running. When the function returns, the 
+// function-external global value is returned unchanged. If the num param was
+// not used, the function-external global value would have changed permanently
+console.log(name);//  "Walmart"
+console.log('walmart 3rd question - obj1',obj1.value);//  "first value"
+// inside the function - new copies of objects are made, and so function-external
+// values stay intact
+console.log('walmart 3rd question - obj2',obj2.value);// "new value"
+// inside the function - new copies of objects are made, however object properties
+// are also modified, so function-external values also get updated
+console.log('walmart 3rd question - obj3',obj3.value);// "new value"
+// while object was not passed in, its pointing to obj2 function-externally
+// hence it gets updated as well
+
+//Efficient string repeater [String.prototype.repeat]
+String.prototype.repeat = function(n) {
+    var result ='';
+    if (typeof n !== 'undefined' && n>0) {
+        if (n === Number.Infinity) {
+            console.error('argument is too large. please try a lower argument');
+        } else {
+            for (var i=0; i<n; i++) {
+                result += this;
+            }
+        }
+    }
+    return result;
+}
+console.log("ABC".repeat(2)); //ABCABC
+// 'abc'.repeat(2)
+// 'abc'.repeat(0) // will return ''
+// 'abc'.repeat() 
+// 'abc'.repeat(Numer.Infinity)
+
+// Array flattening [[1,3,5],[4,7,2],[[2,3],4] should return 1,3,5,4,7,2,2,3,4
+var input = [[1,3,5],[4,7,2],[2,3],4];
+var flatten = function(arr,resultArr) {
+    var currentArrVal;
+    var resultArr;
+    if (typeof resultArr === 'undefined' ) {
+      resultArr =[];
+    }
+    for (var i=0; i<arr.length; i++) {
+        currentArrVal = arr[i];
+        if (! Array.isArray(currentArrVal)) {
+            resultArr.push(currentArrVal);
+        } else {
+            flatten(currentArrVal,resultArr);
+        }
+    }
+    return resultArr.join();
+}
+console.log('flatten',flatten(input)); //1,3,5,4,7,2,2,3,4
+// walmart onsite interview
+// css child/descendent/sibling/general
+// local storage vs session storage - what about different browsers/different tabs
+// in chrome , duplicating a tab copies the session storage- going forward there is
+// no automatic 'sharing' of local storage between these tabs, so they are not in 'sync'
+// also 'reopen tab' restores the session storage
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage
+// require js
+
+var _x=0;
+var obj = {
+  _x:1,
+  _y:2,
+  f: function() {
+    //console.log('objliteral',_x);// _x is not defined
+    console.log('objliteral',this._x+this._y);
+  },
+  g: function() {
+    return function() {
+      //console.log('objliteral',_x); // _x is not defined
+      console.log('objliteral',this._x);
+    }
+  },
+  h: (function() {
+    return function() {
+      console.log('objliteral',this._x);
+    }
+  })(),
+  i: (function() {
+    return function() {
+      return ++_x;
+    }
+  })(),
+  j: (function() {
+    return function() {
+      return ++this._x;
+    }
+  })(),
+  k: (function() {
+    var _z=0;// same behavior if _z is a top level key
+    return function() {
+      return _z++;
+    }
+  })(),
+  l: (function(idx) {
+    return function() {
+      return idx++;
+    }
+  })(0)
+}
+console.log('objliteral',obj._x);//1
+obj.f();//3
+(obj.g())()// undefined;
+obj.g().call(obj);//1
+(obj.g().bind(obj))();//1
+obj.h();//1
+console.log('objliteral closure',obj.i());//1
+console.log('objliteral closure',obj.i());//2
+console.log('objliteral closure',obj.j());//2
+console.log('objliteral closure',obj.j());//3
+console.log('objliteral closure',obj.k());//0
+console.log('objliteral closure',obj.k());//1
+console.log('objliteral closure',obj.l());//0
+console.log('objliteral closure',obj.l());//1
+
+var obj = {
+  name:'bikram',
+  email:'bikram@walmart.com',
+  f: function() {
+    return this.name;
+  },
+  g: function() {
+      return this.email;
+  },
+  h: function() {
+    return this.f()+' '+this.g();
+  },
+  i: function() {
+    console.log('objliteral delayed 2nd type', this.f()+' '+this.g());
+  }
+}
+console.log('objliteral 2nd type',obj.h());//1
+var delayedObjectMethod = function () {
+  var self = this;
+  setTimeout(self.i.bind(self),1000);
+}
+delayedObjectMethod.call(obj);
+
+// narvar interview
+// ispalindrome then string prototype then check if function exists
+// is the following isplanidrome better or the more usual for-loop
+// implemenentation better
+let isPalindrome = (str) => {
+  return str.split('').reverse().join('') === str;
+}
+console.log('isPalindrome',isPalindrome('abba'));
+console.log('isPalindrome',isPalindrome('abcd'));
+// css - modal window z-index and x close button on top right
+
+// vmware interview
+var x=1;
+(function() {
+  console.log(x);
+  var x =2;
+  // x =2;
+})();
+console.log(x);
+// (function() {
+//   console.log(y);// undefined error, only variable/function declarations are hoisted
+//   y =2;
+// })();
+// console.log(y);
+
+// write code that checks for balanced tags
+// isBalanced ('({)}') ==> false
+// isBalanced ('({})') ==> true
+var isTagsBalanced = function(str) {
+  var result=str.split('');
+  var currentChar;
+  var prevChar;
+  for (var i=0;i<result.length;i++) {
+    currentChar = result[i];
+    if (i>0) {
+      prevChar = result[i-1];
+    }
+    if ( ! isLeftTag(currentChar)) {
+      if (isBalancedTagsFound(currentChar,prevChar)) {
+        result.splice(i,1);
+        --i;
+        result.splice(i,1);
+        --i;
+      }
+    }
+  }
+  return result.length ===0? true: false;
+}
+var isLeftTag = function (char) {
+  var leftTags =  ['[','{','('];
+  return leftTags.some(function(element){
+    return char === element;
+  });
+}
+var isBalancedTagsFound = function(currentChar,prevChar) {
+  var leftTags =  ['[','{','('];
+  var rightTags = [']','}',')'];
+  return rightTags.some(function(element,index) {
+    return  currentChar === element  && prevChar===leftTags[index] ;
+  });
+}
+console.log('isTagsBalanced',isTagsBalanced('[]'));
+console.log('isTagsBalanced',isTagsBalanced('[]{}([({})])'));
+console.log('isTagsBalanced',isTagsBalanced('([({[})])'));
+
+// viome interview
+// name some common request headers
+// find if two strings are palindromes of each other
+// - use two objects/ alternatively use one object and 
+// remove keys from that based on the 2nd string
+// use a rate limiter for making xhr calls
+// given an array , return another array with it 
+// appended [1,2] ==> [1,2,1,2]
+
+// cloudcar interview
+console.log(typeof 32)
+console.log(typeof '')
+console.log(typeof [])
+console.log(typeof 'undefined')
+console.log(typeof undefined)
+console.log(typeof null)
+// describe prototypal inheritance
+// describe inline/block
+// describe private functions
+// describe function or block level scope
+function letTest() {
+  let x = 1;
+  if (true) {
+    let x = 2;  // different variable
+    console.log(x);  // 2
+  }
+  console.log(x);  // 1
+}
+// give example of a slow inbuilt angular directive - wtf
+
+// baidu sde interview
+// Give a list of meeting times, find minimum of rooms it need to take
+// 1000-1100 => 1 room
+// 1000-1100, 1000-1200 => 2 rooms
+// 300-400, 200-300 => 1 room
+// 200-400, 100-300 => 2 rooms
+// 500-700, 400-600, 400-500 => 2 rooms
+// 200-400, 300-500, 300-400 => 3 rooms
+// 2200-400, 100-300 => 2 rooms
+// assume arr is [ [300,400], [200,400], [300,500]]
+var getNumberOfRooms = function(arr) {
+  var numberOfRooms=1;
+  // arr = arr.map(function(currentVal,index) {
+  //     if ( currentVal[1] <  currentVal[0] ) {
+  //          currentVal[1] +=2400;
+  //     }
+  // })
+  for (var i=0; i< arr.length; i++) {
+    if ( (arr[i][1] < arr[i][0])) {
+        arr[i][1] += 2400;
+    }
+  }
+  arr.sort(function(a,b){
+      return a[0]-b[0];
+  })
+  // arr is now [ [200,400], [300,400], [300,500]]
+  for (var i=1; i< arr.length; i++) {
+    if ( (arr[i][0] >= arr[i-1][0]) && (arr[i][0] < arr[i-1][1])) {
+        ++numberOfRooms;
+    }
+  }
+  return numberOfRooms;
+}
+console.log('getNumberOfRooms',getNumberOfRooms([[2200,400],[2100,2300]]));
+
+// baidu in person interview
+// given a small string and a large corpus of text, find the smallest pangram
+// code up an end-to-end folder structure , including server side representation
+// write down the object modeliing for trafic light / human traffic light/ traffic cluster/ city lights controller/
