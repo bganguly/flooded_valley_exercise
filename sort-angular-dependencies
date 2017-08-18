@@ -1,6 +1,10 @@
+/**
+ * Given a string of native and custom angular controller/module dependencies, sort them
+ * to adhere to ESlint rule
+ */
+ 
 var sortDi = function(unsortedDi) {
-    var unsortedDiArray = unsortedDi.split(',');
-    return unsortedDiArray.map(function(elem) { return elem.trim()}).sort();
+    return unsortedDi.split(',').map(function(elem) { return elem.trim()}).sort();
 }
 
 var sortWithQuotes = function(sorted) {
