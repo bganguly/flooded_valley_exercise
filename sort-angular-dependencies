@@ -1,0 +1,20 @@
+var sortDi = function(unsortedDi) {
+    var unsortedDiArray = unsortedDi.split(',');
+    return unsortedDiArray.map(function(elem) { return elem.trim()}).sort();
+}
+
+var sortWithQuotes = function(sorted) {
+    return sorted.map(function (elem) {
+        return "'"+elem+"'";
+    }).join(', ');
+}
+
+var sortWithoutQuotes = function(sorted) {
+    return sorted.join(', ');
+}
+
+var unsorted = sortDi('$scope, Consts, Device, Datapoint, Panel, $rootScope,\
+ $route, $timeout, TriggerApps, Registry, FlashMessage, $controller, $translate');
+
+console.log(sortWithQuotes(unsorted))
+console.log(sortWithoutQuotes(unsorted))
